@@ -1,0 +1,7 @@
+extends layout
+block content
+  .row
+    each sticker in stickers
+      .col-sm-3
+        img.img-thumbnail(src=`${sticker.filePath}`)
+        sticker.name

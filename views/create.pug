@@ -1,0 +1,12 @@
+extends layout
+block content
+    h3.text-center Create a Festival Sticker
+    form(action="/create" method="POST")
+        .form-group
+            label(for="Festival name") Festival Name
+            input.form-control(type="text", name="festivalName", value='')
+            small(id="festivalHelp" class="form-text text-muted") Write the name of the festival eg. Diwali, Holi etc.
+        .form-group
+            label(for="Festival name") File Path
+            input.form-control(type="text", name="filePath", value='')
+        input.btn.btn-primary(type="submit", value="submit")

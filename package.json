@@ -11,7 +11,9 @@
     "ejs": "~2.6.1",
     "express": "~4.16.1",
     "http-errors": "~1.6.3",
-    "morgan": "~1.9.1"
+    "mongoose": "^5.8.7",
+    "morgan": "~1.9.1",
+    "pug": "^2.0.4"
   },
   "keywords": [
     "indian festivals",
