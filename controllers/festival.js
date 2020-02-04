@@ -7,7 +7,6 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const festivals = await Festival.find();
-    res.json(festivals);
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -17,10 +16,10 @@ router.get("/", async (req, res) => {
 //type:         POST
 //description:  Creates festival
 router.post("/create", async (req, res) => {
-  const nameFestival = req.body.festivalName;
+  const nameFestival = req.body.name;
   try {
     let name = await Festival.findOne()
-      .where("festivalName")
+      .where("name")
       .in(nameFestival);
 
     if (name) {
@@ -30,7 +29,7 @@ router.post("/create", async (req, res) => {
     }
 
     name = new Festival({
-      festivalName: nameFestival
+      name: nameFestival
     });
 
     await name.save();

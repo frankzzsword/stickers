@@ -20,20 +20,20 @@ router.get("/", async (req, res, next) => {
 //description:  Get stickers from particular festival
 router.get("/:festival", async (req, res) => {
   try {
-    let festivalName = await Festival.find({
-      festivalName: req.params.festival
-    });
-
-    let sticker = await Sticker.find({ festival: festivalName._id });
+    let festivalName = await Festival.findOne({ name: req.params.festival });
+    console.log(festivalName._id);
+    let sticker = await Sticker.find().where({ festival: festivalName._id });
+    console.log(sticker);
     if (!sticker) {
       return res.status(400).json({ errors: [{ msg: "Festival not found" }] });
     }
     res.json(sticker);
   } catch (err) {
     console.log(err.message);
-    res.status(400).json({ msg: "no Stickers found" });
+    res.status(400).json({ msg: "Server error occured" });
   }
 });
+
 //type:         POST
 //description:  Post and Upload stickers from a particular festival
 router.post("/create", async (req, res) => {
@@ -43,9 +43,8 @@ router.post("/create", async (req, res) => {
   try {
     let tempFilePath;
     let stickerFile = req.files.stickerFile;
-
     //get festival id from Festival Schema
-    let festival = await Festival.find({ festivalName: req.body.festival });
+    let festival = await Festival.findOne({ name: req.body.name });
     if (!festival) {
       return res.status(400).json({ errors: [{ msg: "Festival not found" }] });
     }
@@ -59,11 +58,11 @@ router.post("/create", async (req, res) => {
       let path = stickerPath[0].filePath;
       let fileNumber = path.match(/(\d)(?=.jpg)/g);
       tempFilePath = `./public/images/festivals/${
-        req.body.festival
+        req.body.name
       }/${fileNumber[0] + 1}.jpg`;
       await stickerFile.mv(tempFilePath);
     } else {
-      tempFilePath = `./public/images/festivals/${req.body.festival}/1.jpg`;
+      tempFilePath = `./public/images/festivals/${req.body.name}/1.jpg`;
       await stickerFile.mv(tempFilePath);
     }
 
@@ -77,17 +76,6 @@ router.post("/create", async (req, res) => {
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ msg: "Server Error" });
-  }
-});
-
-router.post("/upload", async (req, res) => {
-  try {
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-
-    res.send("File uploaded!");
-  } catch (err) {
-    console.log(err);
-    res.status(500).json({ msg: "File didn't upload" });
   }
 });
 

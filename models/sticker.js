@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var StickerSchema = new Schema({
   festival: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "festivalName"
+    ref: "Festival"
   },
   description: {
     type: String,
@@ -21,4 +21,4 @@ var StickerSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model("Sticker", StickerSchema);
+module.exports = Sticker = mongoose.model("Sticker", StickerSchema);

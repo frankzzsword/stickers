@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 let Schema = mongoose.Schema;
 
 let FestivalSchema = new Schema({
-  festivalName: {
+  name: {
     type: String,
     required: true
   }
 });
 
-module.exports = mongoose.model("Festival", FestivalSchema);
+module.exports = Festival = mongoose.model("Festival", FestivalSchema);
